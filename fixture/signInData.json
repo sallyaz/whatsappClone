@@ -1,0 +1,30 @@
+{
+    "signUpData": [
+        {
+            "label": "First Name",
+            "icon": "user"
+        },
+        {
+            "label": "Last Name",
+            "icon": "user"
+        },
+        {
+            "label": "Email",
+            "icon": "mail"
+        },
+        {
+            "label": "Password",
+            "icon": "lock"
+        }
+    ],
+    "signInData": [
+        {
+            "label": "Email",
+            "icon": "mail"
+        },
+        {
+            "label": "Password",
+            "icon": "lock"
+        }
+    ]
+}
