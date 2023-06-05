@@ -4,17 +4,16 @@ import React from 'react';
 // navigation
 import {NavigationContainer} from '@react-navigation/native';
 import MainNavigation from './MainNavigation';
-import AuthScreen from '../screens/AuthScreen';
+import AuthNavigation from './AuthNavigation';
 
-const AppNavigation = props => {
+const AppNavigation = () => {
   const isAuth = false;
+
   return (
     <NavigationContainer>
-      {isAuth ? <MainNavigation /> : <AuthScreen />}
+      {isAuth ? <MainNavigation /> : <AuthNavigation />}
     </NavigationContainer>
   );
 };
 
 export default AppNavigation;
-
-const styles = StyleSheet.create({});
