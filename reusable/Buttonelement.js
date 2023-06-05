@@ -1,4 +1,4 @@
-import {StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {Dimensions, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import colors from '../constants/colors';
 
@@ -13,7 +13,7 @@ const Buttonelement = props => {
       <Text
         style={{
           textAlign: 'center',
-          width: '80%',
+          width: Dimensions.get('window').width * 0.8,
           color: props.disabled ? colors.grey : colors.nearlyWhite,
         }}>
         {props.title}
@@ -26,10 +26,11 @@ export default Buttonelement;
 
 const styles = StyleSheet.create({
   button: {
-    padding: 10,
+    width: Dimensions.get('window').width * 0.8,
+    padding: 15,
     borderRadius: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    alignSelf: 'center',
   },
-  text: {},
 });
