@@ -9,7 +9,7 @@ import {
   Keyboard,
   Dimensions,
 } from 'react-native';
-import React, {useReducer} from 'react';
+import React, {useCallback, useReducer} from 'react';
 
 // Reusable
 import InputElement from '../reusable/InputElement';
@@ -23,28 +23,7 @@ import Signup from '../assets/Images/Mobile-login-pana.svg';
 import {signUpData} from '../fixture/signInData.json';
 import {formHandler} from '../utils/formHandler';
 import colors from '../constants/colors';
-
-const reducer = (state, action) => {
-  const {validationResult, id} = action;
-
-  let isValid = true;
-
-  const updateValidities = {
-    ...state.inputValidities,
-    [id]: validationResult,
-  };
-
-  for (const key in updateValidities) {
-    if (updateValidities[key] !== undefined) {
-      isValid = false;
-      break;
-    }
-  }
-  return {
-    inputValidities: updateValidities,
-    formIsValid: isValid,
-  };
-};
+import {reducer} from '../utils/reducers/formreducer';
 
 const initialState = {
   inputValidities: {
@@ -58,11 +37,14 @@ const initialState = {
 
 const SignUpScreen = ({navigation}) => {
   const [formState, dispatchFormState] = useReducer(reducer, initialState);
-  const inputHadler = (id, value) => {
-    id
-      ? dispatchFormState({id, validationResult: formHandler(id, value)})
-      : 'Invalid Value';
-  };
+  const inputHadler = useCallback(
+    (id, value) => {
+      id
+        ? dispatchFormState({id, validationResult: formHandler(id, value)})
+        : 'Invalid Value';
+    },
+    [dispatchFormState],
+  );
 
   const createFormsLayout = signUpData.map(({label, icon}, key) => {
     return (

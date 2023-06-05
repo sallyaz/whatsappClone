@@ -9,7 +9,7 @@ import {
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import React from 'react';
+import React, {useCallback, useReducer} from 'react';
 
 // Reusable
 import InputElement from '../reusable/InputElement';
@@ -23,11 +23,26 @@ import Login from '../assets/Images/Mobile-login-cuate.svg';
 import {signInData} from '../fixture/signInData.json';
 import {formHandler} from '../utils/formHandler';
 import colors from '../constants/colors';
+import {reducer} from '../utils/reducers/formreducer';
+
+const initialState = {
+  inputValidities: {
+    Email: false,
+    Password: false,
+  },
+  formIsValid: false,
+};
 
 const SignInScreen = ({navigation}) => {
-  const inputHadler = (id, value) => {
-    id ? formHandler(id, value) : 'Invalid Value';
-  };
+  const [formState, dispatchFormState] = useReducer(reducer, initialState);
+  const inputHadler = useCallback(
+    (id, value) => {
+      id
+        ? dispatchFormState({id, validationResult: formHandler(id, value)})
+        : 'Invalid Value';
+    },
+    [dispatchFormState],
+  );
 
   const createFormsLayout = signInData.map(({label, icon}, key) => {
     return (
@@ -58,7 +73,7 @@ const SignInScreen = ({navigation}) => {
         <Text style={styles.Login}>Login</Text>
         {createFormsLayout}
         <Buttonelement
-          disabled={true}
+          disabled={!formState.formIsValid}
           title={'Sign In'}
           onPress={() => {
             console.log('Clicked');
